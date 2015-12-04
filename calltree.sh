@@ -8,9 +8,9 @@ unset_graphdb() { unset GRAPHDB; }
 build_graphdb() { cscope -bkRu ${GRAPHDB:+-f $GRAPHDB} && echo Created ${GRAPHDB:-cscope.out}...; }
 
 # cscope queries
-fdefine() { cscope -d ${GRAPHDB:+-f $GRAPHDB} -L1 $1; }
-callees() { cscope -d ${GRAPHDB:+-f $GRAPHDB} -L2 $1; }
-callers() { cscope -d ${GRAPHDB:+-f $GRAPHDB} -L3 $1; }
+fdefine() { cscope ${GRAPHDB:+-f $GRAPHDB} -d -L1 $1; }
+callees() { cscope ${GRAPHDB:+-f $GRAPHDB} -d -L2 $1; }
+callers() { cscope ${GRAPHDB:+-f $GRAPHDB} -d -L3 $1; }
 
 # given a set of function names, find out how they're related
 filter_edges() { local sym cscope_line
