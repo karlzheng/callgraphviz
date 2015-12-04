@@ -103,7 +103,7 @@ zgrviewer() { ~/bin/zgrviewer -Pdot $*; }
 figviewer() { xfig <(dot -Tfig $*); }
 
 # specify a viewer
-ctviewer() { figviewer $*; }
+ctviewer() { xdg-open $*; }
 
 # add color to specified nodes
 colornodes() { (cat; for x in $@; do echo "$x [color=red]"; done;) }
@@ -116,11 +116,11 @@ _relate() { call_graph $@ | edges | graph_filter callee | colornodes $@ | graph;
 _leaks() { call_leaks $1 $2 | edges | graph_filter ${3:-callee} | colornodes $1 $2 | graph; }
 
 # generate dot files and invoke ctviewer
-upstream() { _upstream $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
-downstream() { _downstream $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
-subgraph() { _subgraph $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
-relate() { _relate $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
-leaks() { _leaks $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
+upstream() { _upstream $@ > /tmp/tfile; ctviewer /tmp/tfile; }
+downstream() { _downstream $@ > /tmp/tfile; ctviewer /tmp/tfile; }
+subgraph() { _subgraph $@ > /tmp/tfile; ctviewer /tmp/tfile;}
+relate() { _relate $@ > /tmp/tfile; ctviewer /tmp/tfile; }
+leaks() { _leaks $@ > /tmp/tfile; ctviewer /tmp/tfile; }
 
 # dot file conversions
 dot2png() { dot -Tpng -o $1; }
