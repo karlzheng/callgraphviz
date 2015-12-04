@@ -118,7 +118,7 @@ _leaks() { call_leaks $1 $2 | edges | graph_filter ${3:-callee} | colornodes $1 
 # generate dot files and invoke ctviewer
 upstream() { _upstream $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
 downstream() { _downstream $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
-subgraph() { _subgraph $@ > /tmp/tfile; xdg-open /tmp/tfile;}
+subgraph() { _subgraph $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
 relate() { _relate $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
 leaks() { _leaks $@ > /tmp/tfile; ctviewer /tmp/tfile; rm -f /tmp/tfile; }
 
