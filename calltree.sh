@@ -46,8 +46,10 @@ filter_cscope_lines() { local cscope_line
 }
 
 # given a set of function names piped in, help spit out all their callers or callees that aren't already in the set
-descend() { local symbol
+descend() { local symbol cnt=0 max=${3:-0}
     while read -a symbol; do
+	if [ $max -ne 0 -a $cnt -eq $max ]; then return 0 ; fi
+	cnt=$(($cnt+1))
         $1 $symbol | filter_cscope_lines $2
     done
 }
@@ -55,14 +57,14 @@ descend() { local symbol
 # discover functions upstream of initial set
 all_callers() { local tfile=/tmp/all_callers.$RANDOM
     cat ${1:+<(echo $1)} > $tfile
-    descend callers $tfile <$tfile >>$tfile
+    descend callers $tfile ${2:-0} <$tfile >>$tfile
     cat $tfile; rm $tfile
 }
 
 # discover functions downstream of initial set
 all_callees() { local tfile=/tmp/all_callees.$RANDOM
     cat ${1:+<(echo $1)} > $tfile
-    descend callees $tfile <$tfile >>$tfile
+    descend callees $tfile ${2:-0}<$tfile >>$tfile
     cat $tfile; rm $tfile
 }
 
@@ -109,8 +111,8 @@ ctviewer() { xdg-open $*; }
 colornodes() { (cat; for x in $@; do echo "$x [color=red]"; done;) }
 
 # generate dot files
-_upstream() { all_callers $1 | edges | graph_filter ${2:-caller} | colornodes $1 | graph; }
-_downstream() { all_callees $1 | edges | graph_filter ${2:-callee} | colornodes $1 | graph; }
+_upstream() { all_callers $1 $2 | edges | graph_filter ${3:-caller} | colornodes $1 | graph; }
+_downstream() { all_callees $1 $2 | edges | graph_filter ${3:-callee} | colornodes $1 | graph; }
 _subgraph() { call_tree $1 $2 | edges | graph_filter ${3:-callee} | colornodes $1 $2 | graph; }
 _relate() { call_graph $@ | edges | graph_filter callee | colornodes $@ | graph; }
 _leaks() { call_leaks $1 $2 | edges | graph_filter ${3:-callee} | colornodes $1 $2 | graph; }
