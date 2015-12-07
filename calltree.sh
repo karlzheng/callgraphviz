@@ -128,3 +128,5 @@ leaks() { _leaks $@ > /tmp/tfile; ctviewer /tmp/tfile; }
 dot2png() { dot -Tpng -o $1; }
 dot2jpg() { dot -Tjpg -o $1; }
 dot2html() { dot -Tpng -o $1.png -Tcmapx -o $1.map; (echo "<IMG SRC="$1.png" USEMAP="#iftree" />"; cat $1.map)  > $1.html; }
+
+$1 "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
