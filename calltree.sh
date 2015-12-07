@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo calltree.sh
 touch ~/calltree.deny
 
 #use cscope to build reference files (./cscope.out by default, use set_graphdb to override name or location)
