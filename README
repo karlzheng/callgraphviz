@@ -1,4 +1,36 @@
 
+I was looking for a way to produce call-tree in VIM. The CCTree[1] is good, but sometimes you just want a graph. After some googling I found this callgraphviz[2] and calltree.sh[3] altogether is just what I want. I have forked the callgraphviz[2] and add whatever is needed to work for my environment.
+
+callgraphviz is not currently used in the calltree.sh.
+
+INSTALL:
+    1. Copy the calltree.sh to anywhere shell would look for, e.g. /usr/bin
+    2. Copy the calltree.vim to ~/.vim/plugin
+
+In VIM with cscope, press the following function on a keyword would:
+<F2>: produce a 1-level Callee graph by xdot
+<F3>: produce a 1-level Caller graph by xdot
+
+My environment:
+    * Ubuntu 14.04.2 LTS
+    * vim-2:7.4.052-1ubuntu3
+    * cscope-15.8a-2
+    * graphviz-2.36.0-0ubuntu3.1
+
+TODO:
+    * callgraphviz fix save to .dot issue
+    * callgraphviz delete symbol
+    * callgraphviz function expand and collapse caller/callee function
+    * calltree.sh use callgraphviz
+
+[1] https://sites.google.com/site/vimcctree/
+[2] http://www.toolchainguru.com/2008/07/bash-c-call-trees-and-graphs.html
+[3] http://www.openfoundry.org/tw/tech-column/8352-callgraphviz-cscopegraphviz-xdot-call-graph-visualizer
+[4] https://github.com/mkl0301/callgraphviz/
+[5] http://mkl-note.blogspot.tw/2015/12/c-call-graph-with-cscope.html
+
+-Mac Lin <mkl0301@gmail.com>
+---------------------------------------------------------
 A call graph visualzer based on csope[1], graphviz[2], xdot[3]
 
 [1] http://cscope.sourceforge.net/
